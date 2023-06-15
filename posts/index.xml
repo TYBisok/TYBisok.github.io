@@ -11,7 +11,24 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 09 Jun 2023 09:59:31 +0800</lastBuildDate><atom:link href="https://tybisok.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Jun 2023 10:33:38 +0800</lastBuildDate><atom:link href="https://tybisok.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Read Write Space Amplification Pick 2</title>
+      <link>https://tybisok.github.io/posts/read-write-space-amplification-pick-2/</link>
+      <pubDate>Thu, 15 Jun 2023 10:33:38 +0800</pubDate>
+      
+      <guid>https://tybisok.github.io/posts/read-write-space-amplification-pick-2/</guid>
+      <description>原文地址：http://smalldatum.blogspot.com/2015/11/read-write-space-amplification-pick-2_23.html
+好事成三，现实并非总是如此，有时最多只能选其二。在分布式系统中，CAP，PACELC，FIT 都是被人熟知的例子。数据库引擎也有类似的选择：一个算法最多可以针对读放大（read amplification）、写放大（write amplification）和空间放大（space amplification）的两个进行优化。它们是描述效率和性能的指标，这意味着一个算法不可能同时在读、写和空间都优于另一种算法。例如，B-Tree 相较于 LSM 有着更小的读放大，但 LSM 有着更小的写放大。我将这些指标缩写为 read-amp，write-amp 和 space-amp，也将其称为 framework。
+该 framework 假定数据库工作负载由点查询、长度为 N 的范围查询和写操作组成。如果我添加一个删除操作，那么这将符合 RocksDB 和 LevelDB 的 API。写入是盲写（blind-write）操作，因为再写之前不一定会读取。
+这是该系列文章的第一篇，第二篇文章将使用该框架比较 B-Tree 和 LSM，第三篇文章将论证一个算法不可能使得所有三个指标都最优。
+目的 在评估真实和潜在工作负载的算法时，read-amp，write-amp 和 space-amp 用于解释其性能和效率。它们不能代替大 O 表示法，它们通常假设特定的工作负载和配置，包括 RAM 大小、数据库大小和存储类型。
+我们使用该 framework 来比较 InnoDB 和 RocksDB，因为更好的性能不足以作为选择一个算法的指标。在使用闪存时，耐用性（endurance，write-amp）和容量（capacity，space-amp）很重要，而 IOPs（点查询和范围查询的 read-amp，写入的 write-amp）在使用机械磁盘时很重要。
+该 framework 有助于理解为获得更好的 QPS 所做出的妥协。在写优化的算法中，很容易用写换取空间和读取效率，不过这些做法应当对外说明，因为它们是有代价的。新算法可以通过降低范围读的效率来获得比 RocksDB 更好的写入吞吐量，但 LinkBench 工作负载需要高效的写入和范围读性能。
+该 framework 是有用的，因为 key comparisons 的方式并不总能产生“正确”的结果。传统的算法分析方法非常适合限制 key comparisions 的数量，从而了解算法在内存中的性能。但是当比较键（key）部分来自cache，部分来自 RAM 或者 Disk时，大O表示法很难比较算法间的优劣。常量因子很重要，每个查询1.2次或1.5次的读盘会带来很大的差异。
+读放大 Read-amp 是指完成一个逻辑读取操作所需的工作量。所谓工作量在不同类型的数据库中定义相异，包括内存型数据库，无缓存（最坏情况）的持久性数据库，或者有缓存的（平均情况）的持久性数据库。在内存型数据库中，工作量可以是键的比较次数，或者传统算法分析所用的指标。在持久性数据库中，工作量包括了传输的字节数和磁盘寻道次数（寻道次数对磁盘很重要，对 NVM 可忽略）。工作量也包括了从存储介质中读取数据的解药成本。</description>
+    </item>
+    
     <item>
       <title>My First Post</title>
       <link>https://tybisok.github.io/posts/my-first-post/</link>

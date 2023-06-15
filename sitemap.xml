@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tybisok.github.io/posts/my-first-post/</loc>
-    <lastmod>2023-06-09T09:59:31+08:00</lastmod>
-  </url><url>
     <loc>https://tybisok.github.io/posts/</loc>
-    <lastmod>2023-06-09T09:59:31+08:00</lastmod>
+    <lastmod>2023-06-15T10:33:38+08:00</lastmod>
+  </url><url>
+    <loc>https://tybisok.github.io/posts/read-write-space-amplification-pick-2/</loc>
+    <lastmod>2023-06-15T10:33:38+08:00</lastmod>
   </url><url>
     <loc>https://tybisok.github.io/</loc>
+    <lastmod>2023-06-15T10:33:38+08:00</lastmod>
+  </url><url>
+    <loc>https://tybisok.github.io/posts/my-first-post/</loc>
     <lastmod>2023-06-09T09:59:31+08:00</lastmod>
   </url><url>
     <loc>https://tybisok.github.io/archives/</loc>
